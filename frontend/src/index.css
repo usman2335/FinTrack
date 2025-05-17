@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=Poppins:wght@400;600&display=swap");
+
+@import "tailwindcss";
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+@theme {
+  --color-mint-500: oklch(0.72 0.11 178);
+  --color-primary-blue: #112d4e;
+  --color-secondary-blue: #3f72af;
+  --color-background: #f9f7f7;
+  --color-text-black: #1f1f1f;
+  --color-text-grey: #ffffff;
+  --font-alexandria: "Alexandria", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+}

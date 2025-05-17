@@ -1,0 +1,11 @@
+.logo {
+  font-family: "Alexandria" !important;
+}
+
+.logo-gradient {
+  background: linear-gradient(90deg, #568ed2 39.41%, #00387b 100.71%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
