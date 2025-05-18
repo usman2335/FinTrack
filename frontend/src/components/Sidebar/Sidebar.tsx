@@ -14,7 +14,12 @@ import Button from "../Button/Button";
 
 const Sidebar = () => {
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <AppstoreOutlined /> },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <AppstoreOutlined />,
+      end: true,
+    },
     {
       name: "Manage Finances",
       path: "/dashboard/finances",
@@ -48,19 +53,14 @@ const Sidebar = () => {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 10 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -10 }}
-      transition={{ duration: 0.4 }}
-      className="w-64 bg-tertiary-blue text-white h-screen p-6 space-y-4"
-    >
+    <div className="hidden md:block md:w-64 bg-tertiary-blue text-white h-screen p-6 space-y-4">
       <Logo className="text-4xl pl-2" />
       <ul className="space-y-2 mt-6">
         {menuItems.map((item) => (
           <li key={item.path}>
             <NavLink
               to={item.path}
+              end={item.end}
               className={({ isActive }) =>
                 `flex items-center gap-2 p-2 rounded  ${
                   isActive
@@ -100,7 +100,7 @@ const Sidebar = () => {
           </Link>
         </li>
       </ul>
-    </motion.div>
+    </div>
   );
 };
 

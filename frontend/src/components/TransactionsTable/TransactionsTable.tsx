@@ -1,5 +1,6 @@
 import { Table, Tag, type TableProps } from "antd";
 import transactions from "../../data/transactions";
+import "./TransactionsTable.css";
 
 interface DataType {
   id: number;
@@ -54,6 +55,7 @@ const TransactionsTable = ({
         dataSource={dataToShow}
         pagination={pagination === false ? false : undefined}
         style={{ height: "100%", width: "100%" }}
+        rowClassName={() => "custom-row"}
       />
     </div>
   );

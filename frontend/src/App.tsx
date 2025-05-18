@@ -6,6 +6,21 @@ import SignupPage from "./pages/SignupPage";
 import DashboardLayout from "./layouts/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
 import { ConfigProvider } from "antd";
+import TransactionsPage from "./pages/TransactionsPage";
+
+const themeConfig = {
+  token: {
+    colorPrimary: "#112d4e",
+    borderRadius: 6,
+    colorBgContainer: "#ffffff",
+    fontFamily: "Poppins",
+  },
+  components: {
+    Table: {
+      headerBg: "#fff",
+    },
+  },
+};
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -17,20 +32,15 @@ function AnimatedRoutes() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />}></Route>
+          <Route
+            path="/dashboard/transactions"
+            element={<TransactionsPage />}
+          ></Route>
         </Route>
       </Routes>
     </AnimatePresence>
   );
 }
-
-const themeConfig = {
-  token: {
-    colorPrimary: "#112d4e",
-    borderRadius: 6,
-    colorBgContainer: "#ffffff",
-    fontFamily: "Poppins",
-  },
-};
 
 function App() {
   return (

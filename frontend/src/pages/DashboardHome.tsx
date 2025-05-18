@@ -2,7 +2,7 @@ import { Card, Radio, type StatisticProps, Statistic, Table } from "antd";
 import { useState } from "react";
 import CountUp from "react-countup";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-
+import { motion } from "framer-motion";
 import transactions from "../data/transactions";
 import TransactionsTable from "../components/TransactionsTable/TransactionsTable";
 import PieChart from "../components/PieChart/PieChart";
@@ -45,7 +45,13 @@ const DashboardHome = () => {
   let savings = calculateSavings();
 
   return (
-    <div className="p-6 flex flex-col gap-4">
+    <motion.div
+      initial={{ opacity: 0, x: 10 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -10 }}
+      transition={{ duration: 0.3 }}
+      className="p-6 flex flex-col gap-4"
+    >
       <h1 className="text-2xl font-bold">{`Welcome, ${user.name} ${"👋"}`}</h1>
       <div className="w-full rounded bg-[image:var(--background-gradient)] text-white flex flex-col gap-3 justify-center items-start p-4">
         <span className="text-lg">Balance</span>
@@ -54,7 +60,7 @@ const DashboardHome = () => {
           {user.balance}
         </span>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-center md:justify-between">
         <Radio.Group
           onChange={onPeriodChange}
           value={timePeriod}
@@ -63,12 +69,17 @@ const DashboardHome = () => {
           defaultValue="Yearly"
           optionType="button"
           buttonStyle="solid"
-          style={{ width: "20%" }}
+          //   style={{ width: "100%" }}
+          className="w-full md:w-1/5"
         />
-        <span className="text-text-grey">Showing data for current month</span>
+        <span className=" hidden md:block text-text-grey">
+          {timePeriod === "Monthly"
+            ? "Showing data for current month"
+            : "Showing data for current week"}
+        </span>
       </div>
-      <div className="flex w-full gap-4 ">
-        <Card variant="borderless" style={{ width: "80%" }}>
+      <div className="flex flex-col items-center md:flex-row w-full gap-4 ">
+        <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
             prefix={user.currency}
             title="Total Budget"
@@ -80,7 +91,7 @@ const DashboardHome = () => {
             }}
           />
         </Card>
-        <Card variant="borderless" style={{ width: "80%" }}>
+        <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
             prefix={user.currency}
             title="Total Expenses"
@@ -94,7 +105,7 @@ const DashboardHome = () => {
             suffix={<ArrowDownOutlined />}
           />
         </Card>
-        <Card variant="borderless" style={{ width: "80%" }}>
+        <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
             prefix={user.currency}
             valueStyle={{
@@ -109,23 +120,23 @@ const DashboardHome = () => {
           />
         </Card>
       </div>
-      <div className="flex gap-4 justify-between">
-        <div className="w-4/6 h-full flex flex-col gap-4">
+      <div className="flex flex-col md:flex-row gap-4 justify-between">
+        <div className="w-full md:w-4/6 h-full flex flex-col gap-4">
           <h1 className="text-xl font-bold text-primary-blue">
             Recent Transactions
           </h1>
           <TransactionsTable rowLimit={5} pagination={false} />
         </div>
-        <div className="w-2/6 h-full flex flex-col gap-4">
+        <div className="w-full md:w-2/6 h-full flex flex-col gap-4">
           <h1 className="text-xl font-bold text-primary-blue">
             Income vs Expenses
           </h1>
-          <div className="flex items-center justify-center w-full bg-white rounded p-4 shadow-md">
+          <div className="flex items-center justify-center w-full bg-white rounded p-6 shadow-md">
             <PieChart />
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
