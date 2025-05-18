@@ -1,4 +1,4 @@
-import { Card, Radio, type StatisticProps, Statistic, Table } from "antd";
+import { Card, Radio, type StatisticProps, Statistic } from "antd";
 import { useState } from "react";
 import CountUp from "react-countup";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";

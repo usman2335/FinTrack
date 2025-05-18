@@ -1,5 +1,4 @@
 import { Link, NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
 import Logo from "../logo";
 import {
   AppstoreOutlined,

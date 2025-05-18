@@ -1,5 +1,5 @@
 import Logo from "../components/logo";
-import { Checkbox, Input } from "antd";
+import { Input } from "antd";
 import { motion } from "framer-motion";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import Button from "../components/Button/Button";
