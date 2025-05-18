@@ -22,7 +22,11 @@
     "react-chartjs-2": "^5.3.0",
     "react-countup": "^6.5.3",
     "react-dom": "^19.1.0",
+<<<<<<< HEAD
     "react-router-dom": "^7.6.0",
+=======
+    "react-router-dom": "^6.30.0",
+>>>>>>> 850773397f206e8b787897ef48ce54e2f4f2ad20
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {

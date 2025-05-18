@@ -1,5 +1,4 @@
 import { Link, NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
 import Logo from "../logo";
 import {
   AppstoreOutlined,
@@ -18,6 +17,7 @@ const Sidebar = () => {
       name: "Dashboard",
       path: "/dashboard",
       icon: <AppstoreOutlined />,
+      end: true,
     },
     {
       name: "Manage Finances",
@@ -62,28 +62,23 @@ const Sidebar = () => {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 10 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -10 }}
-      transition={{ duration: 0.4 }}
-      className="w-64 bg-tertiary-blue text-white h-screen p-6 space-y-4"
-    >
+    <div className="hidden md:block md:w-64 bg-tertiary-blue text-white h-screen p-6 space-y-4">
       <Logo className="text-4xl pl-2" />
       <ul className="space-y-2 mt-6">
         {menuItems.map((item) => (
           <li key={item.path}>
             <NavLink
               to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded ${
+              end={item.end}
+              className={({ isActive }: { isActive: boolean }) =>
+                `flex items-center gap-2 p-2 rounded  ${
                   isActive
                     ? "text-primary-blue font-semibold"
                     : "text-text-grey font-normal hover:scale-105"
                 }`
               }
             >
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <>
                   <span
                     className={`text-2xl rounded ${
@@ -136,7 +131,7 @@ const Sidebar = () => {
           </Link>
         </li>
       </ul>
-    </motion.div>
+    </div>
   );
 };
 

@@ -8,6 +8,21 @@ import DashboardHome from "./pages/DashboardHome";
 import { ConfigProvider } from "antd";
 import AddExpensePage from "./pages/AddExpense";
 import AddBudgetPage from "./pages/AddBudget";
+import TransactionsPage from "./pages/TransactionsPage";
+
+const themeConfig = {
+  token: {
+    colorPrimary: "#112d4e",
+    borderRadius: 6,
+    colorBgContainer: "#ffffff",
+    fontFamily: "Poppins",
+  },
+  components: {
+    Table: {
+      headerBg: "#fff",
+    },
+  },
+};
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -21,20 +36,16 @@ function AnimatedRoutes() {
           <Route index element={<DashboardHome />} />
           <Route path="finances/add-expense" element={<AddExpensePage />} />
           <Route path="finances/add-budget" element={<AddBudgetPage />} />
+          <Route index element={<DashboardHome />}></Route>
+          <Route
+            path="/dashboard/transactions"
+            element={<TransactionsPage />}
+          ></Route>
         </Route>
       </Routes>
     </AnimatePresence>
   );
 }
-
-const themeConfig = {
-  token: {
-    colorPrimary: "#112d4e",
-    borderRadius: 6,
-    colorBgContainer: "#ffffff",
-    fontFamily: "Poppins",
-  },
-};
 
 function App() {
   return (
