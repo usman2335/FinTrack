@@ -12,7 +12,7 @@ import TransactionsPage from "./pages/TransactionsPage";
 
 const themeConfig = {
   token: {
-    colorPrimary: "#112d4e",
+    colorPrimary: "#183e6a",
     borderRadius: 6,
     colorBgContainer: "#ffffff",
     fontFamily: "Poppins",

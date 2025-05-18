@@ -8,6 +8,7 @@ interface DataType {
   date: string;
   amount: number;
   type: string;
+  category: string;
 }
 interface TransactionsTableProps {
   rowLimit?: number;
@@ -31,6 +32,28 @@ const columns: TableProps<DataType>["columns"] = [
     key: "amount",
   },
   {
+    title: "Category",
+    key: "category",
+    dataIndex: "category",
+    render: (_, { category }) => (
+      <>
+        <Tag color="blue">{category}</Tag>
+      </>
+    ),
+    filters: [
+      {
+        text: "Salary",
+        value: "Salary",
+      },
+      {
+        text: "Groceries",
+        value: "Groceries",
+      },
+    ],
+    onFilter: (value, record) => record.category.startsWith(value as string),
+    filterSearch: true,
+  },
+  {
     title: "Type",
     key: "type",
     dataIndex: "type",
@@ -41,6 +64,18 @@ const columns: TableProps<DataType>["columns"] = [
         </Tag>
       </>
     ),
+    filters: [
+      {
+        text: "Income",
+        value: "income",
+      },
+      {
+        text: "Expense",
+        value: "expense",
+      },
+    ],
+    onFilter: (value, record) => record.type.startsWith(value as string),
+    filterSearch: true,
   },
 ];
 const TransactionsTable = ({
@@ -61,4 +96,20 @@ const TransactionsTable = ({
   );
 };
 
-export default TransactionsTable;
+const AllTransactionsTable = () => {
+  return (
+    <div>
+      <Table<DataType>
+        columns={columns}
+        dataSource={transactions}
+        style={{ height: "100%", width: "100%" }}
+        rowClassName={() => "custom-row"}
+        pagination={{
+          pageSize: 8,
+        }}
+      />
+    </div>
+  );
+};
+
+export { TransactionsTable, AllTransactionsTable };

@@ -1,5 +1,3 @@
-// src/data/transactions.js
-
 const transactions = [
   {
     id: 1,
@@ -7,6 +5,7 @@ const transactions = [
     date: "2025-05-01",
     amount: 100000.0,
     type: "income",
+    category: "Salary",
   },
   {
     id: 2,
@@ -14,6 +13,7 @@ const transactions = [
     date: "2025-05-02",
     amount: 15000.0,
     type: "expense",
+    category: "Groceries",
   },
   {
     id: 3,
@@ -21,6 +21,7 @@ const transactions = [
     date: "2025-05-05",
     amount: 25000.0,
     type: "income",
+    category: "Freelancing",
   },
   {
     id: 4,
@@ -28,6 +29,7 @@ const transactions = [
     date: "2025-05-07",
     amount: 8000.0,
     type: "expense",
+    category: "Utilities",
   },
   {
     id: 5,
@@ -35,6 +37,7 @@ const transactions = [
     date: "2025-05-10",
     amount: 3000.0,
     type: "expense",
+    category: "Health",
   },
   {
     id: 6,
@@ -42,6 +45,7 @@ const transactions = [
     date: "2025-05-12",
     amount: 12000.0,
     type: "income",
+    category: "Miscellaneous",
   },
   {
     id: 7,
@@ -49,6 +53,7 @@ const transactions = [
     date: "2025-05-15",
     amount: 7000.0,
     type: "expense",
+    category: "Food & Dining",
   },
   {
     id: 8,
@@ -56,6 +61,7 @@ const transactions = [
     date: "2025-05-18",
     amount: 5000.0,
     type: "income",
+    category: "Investments",
   },
   {
     id: 9,
@@ -63,6 +69,7 @@ const transactions = [
     date: "2025-05-20",
     amount: 3500.0,
     type: "expense",
+    category: "Utilities",
   },
   {
     id: 10,
@@ -70,6 +77,7 @@ const transactions = [
     date: "2025-05-22",
     amount: 10000.0,
     type: "expense",
+    category: "Transportation",
   },
 ];
 

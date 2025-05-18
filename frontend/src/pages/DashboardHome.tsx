@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import transactions from "../data/transactions";
-import TransactionsTable from "../components/TransactionsTable/TransactionsTable";
+import { TransactionsTable } from "../components/TransactionsTable/TransactionsTable";
 import PieChart from "../components/PieChart/PieChart";
 console.log(transactions);
 

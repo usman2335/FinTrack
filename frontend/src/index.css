@@ -7,7 +7,7 @@ body {
 }
 @theme {
   --color-mint-500: oklch(0.72 0.11 178);
-  --color-primary-blue: #112d4e;
+  --color-primary-blue: #183e6a;
   --color-secondary-blue: #3f72af;
   --color-tertiary-blue: #e6ecf9;
   --color-background: #f9f7f7;
