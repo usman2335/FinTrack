@@ -77,7 +77,6 @@ const SignupPage = () => {
               </p>
               <Input
                 className="h-12"
-                style={{ fontSize: "1em" }}
                 placeholder="Enter your full name"
                 prefix={
                   <UserOutlined
@@ -94,7 +93,6 @@ const SignupPage = () => {
               </p>
               <Input
                 className="h-12"
-                style={{ fontSize: "1em" }}
                 placeholder="Enter your email address"
                 prefix={
                   <MailOutlined
@@ -111,21 +109,20 @@ const SignupPage = () => {
               </p>
               <Input.Password
                 status={error.password ? "error" : ""}
-                className="h-12 text-lg"
+                className="h-12"
                 placeholder="Create password"
                 prefix={
                   <LockOutlined
                     style={{ color: " #536E9F", paddingRight: "5px" }}
                   />
                 }
-                style={{ fontSize: "1em" }}
                 onChange={handlePasswordChange}
               />
             </div>
             <div onClick={handleSubmit}>
               <Button text="Create Account" />
             </div>
-            <div className="flex align-center justify-center gap-2">
+            <div className=" text-sm md:text-base flex align-center justify-center gap-2">
               <p>
                 Don't have an account?{" "}
                 <Link

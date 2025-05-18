@@ -77,7 +77,6 @@ const LoginPage = () => {
               </p>
               <Input
                 className="h-12"
-                style={{ fontSize: "1em" }}
                 placeholder="Enter your email address"
                 prefix={
                   <MailOutlined
@@ -94,14 +93,13 @@ const LoginPage = () => {
               </p>
               <Input.Password
                 status={error.password ? "error" : ""}
-                className="h-12 text-lg"
+                className="h-12"
                 placeholder="Enter your password"
                 prefix={
                   <LockOutlined
                     style={{ color: " #536E9F", paddingRight: "5px" }}
                   />
                 }
-                style={{ fontSize: "1em" }}
                 onChange={handlePasswordChange}
               />
             </div>
@@ -109,7 +107,7 @@ const LoginPage = () => {
               <Checkbox>Remember me</Checkbox>
               <a
                 href="#"
-                className="text-secondary-blue float-right hover:text-blue-700 hover:underline"
+                className="text-sm text-secondary-blue float-right hover:text-blue-700 hover:underline"
               >
                 Forgot password?
               </a>
@@ -119,7 +117,7 @@ const LoginPage = () => {
                 <Button text="Login" />
               </Link>
             </div>
-            <div className="flex align-center justify-center gap-2">
+            <div className="text-sm md:text-base flex align-center justify-center gap-2">
               <p>
                 Don't have an account?{" "}
                 <Link
