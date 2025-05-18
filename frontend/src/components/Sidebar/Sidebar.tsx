@@ -60,7 +60,7 @@ const Sidebar = () => {
             <NavLink
               to={item.path}
               end={item.end}
-              className={({ isActive }) =>
+              className={({ isActive }: { isActive: boolean }) =>
                 `flex items-center gap-2 p-2 rounded  ${
                   isActive
                     ? "text-primary-blue font-semibold"
@@ -68,7 +68,7 @@ const Sidebar = () => {
                 }`
               }
             >
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <>
                   <span
                     className={`text-2xl rounded ${
