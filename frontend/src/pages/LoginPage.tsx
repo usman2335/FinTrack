@@ -60,15 +60,15 @@ const LoginPage = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -10 }}
         transition={{ duration: 0.4 }}
-        className="w-1/2 bg-background pl-15"
+        className="w-full md:w-1/2 bg-background"
       >
-        <div className="flex flex-col  justify-center h-screen">
-          <Logo />
+        <div className="flex flex-col justify-center items-center md:items-start h-screen md:pl-15">
+          <Logo className="text-5xl" />
           <div className="login-container mt-15 flex flex-col gap-4 w-3/4">
-            <h1 className="text-3xl font-bold text-text-black ">
+            <h1 className="text-center md:text-left text-3xl font-bold text-text-black ">
               Welcome back!
             </h1>
-            <p className="text-gray-500">
+            <p className="text-gray-500 text-center md:text-left">
               Login to take control of your finances.
             </p>
             <div className="email flex flex-col gap-1">
@@ -115,23 +115,25 @@ const LoginPage = () => {
               </a>
             </div>
             <div onClick={handleSubmit}>
-              <Button text="Login" />
+              <Link to="/dashboard">
+                <Button text="Login" />
+              </Link>
             </div>
             <div className="flex align-center justify-center gap-2">
               <p>
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="text-secondary-blue hover:underline cursor-pointer"
+                  className="text-secondary-blue underline hover:text-blue-700 cursor-pointer"
                 >
-                  Click here
+                  Sign Up
                 </Link>
               </p>
             </div>
           </div>
         </div>
       </motion.div>
-      <div className="w-1/2 bg-primary-blue flex items-center justify-center">
+      <div className="hidden md:flex w-1/2 bg-primary-blue items-center justify-center">
         <img src="/art.svg" className=""></img>
       </div>
     </div>

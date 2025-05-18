@@ -9,9 +9,16 @@ body {
   --color-mint-500: oklch(0.72 0.11 178);
   --color-primary-blue: #112d4e;
   --color-secondary-blue: #3f72af;
+  --color-tertiary-blue: #e6ecf9;
   --color-background: #f9f7f7;
   --color-text-black: #1f1f1f;
-  --color-text-grey: #ffffff;
+  --color-text-grey: #535353;
   --font-alexandria: "Alexandria", sans-serif;
   --font-poppins: "Poppins", sans-serif;
+  --background-gradient: linear-gradient(
+    90deg,
+    #3f72af 0%,
+    #3f72af 9.13%,
+    #112d4e 100%
+  );
 }

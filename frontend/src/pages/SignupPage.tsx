@@ -60,15 +60,15 @@ const SignupPage = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -10 }}
         transition={{ duration: 0.4 }}
-        className="w-1/2 bg-background pl-15"
+        className="w-full md:w-1/2 bg-background"
       >
-        <div className="flex flex-col  justify-center h-screen">
-          <Logo />
+        <div className="flex flex-col  justify-center items-center md:items-start h-screen md:pl-15">
+          <Logo className="text-5xl" />
           <div className="login-container mt-15 flex flex-col gap-4 w-3/4">
-            <h1 className="text-3xl font-bold text-text-black ">
+            <h1 className="text-center md:text-left text-3xl font-bold text-text-black ">
               Create your account
             </h1>
-            <p className="text-gray-500">
+            <p className="text-center md:text-left text-gray-500">
               Sign up and start mastering your money.
             </p>
             <div className="name flex flex-col gap-1">
@@ -123,23 +123,23 @@ const SignupPage = () => {
               />
             </div>
             <div onClick={handleSubmit}>
-              <Button text="Login" />
+              <Button text="Create Account" />
             </div>
             <div className="flex align-center justify-center gap-2">
               <p>
                 Don't have an account?{" "}
                 <Link
                   to="/"
-                  className="text-secondary-blue hover:underline cursor-pointer"
+                  className="text-secondary-blue hover:text-blue-700 underline cursor-pointer"
                 >
-                  Click here
+                  Login
                 </Link>
               </p>
             </div>
           </div>
         </div>
       </motion.div>
-      <div className="w-1/2 bg-primary-blue flex items-center justify-center">
+      <div className="hidden md:flex w-1/2 bg-primary-blue items-center justify-center">
         <img src="/art.svg" className=""></img>
       </div>
     </div>

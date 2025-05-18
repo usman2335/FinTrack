@@ -1,0 +1,132 @@
+import { Card, Radio, type StatisticProps, Statistic, Table } from "antd";
+import { useState } from "react";
+import CountUp from "react-countup";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+
+import transactions from "../data/transactions";
+import TransactionsTable from "../components/TransactionsTable/TransactionsTable";
+import PieChart from "../components/PieChart/PieChart";
+console.log(transactions);
+
+const formatter: StatisticProps["formatter"] = (value) => (
+  <CountUp end={value as number} separator="," />
+);
+
+const user = {
+  name: "Usman Afzal",
+  balance: "521,000.00",
+  currency: "PKR ",
+  budget: "100000",
+  expenses: "30000",
+};
+const options = [
+  {
+    value: "Monthly",
+    label: "Monthly",
+  },
+  {
+    value: "Weekly",
+    label: "Weekly",
+  },
+];
+const calculateSavings = () => {
+  const budget = parseFloat(user.budget);
+  const expenses = parseFloat(user.expenses);
+  let savings = budget - expenses;
+  return String(savings);
+};
+
+const DashboardHome = () => {
+  const [timePeriod, setTimePeriod] = useState("Monthly");
+  const onPeriodChange = (e: any) => {
+    setTimePeriod(e.target.value);
+    console.log("Selected Period: ", e.target.value);
+  };
+  let savings = calculateSavings();
+
+  return (
+    <div className="p-6 flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">{`Welcome, ${user.name} ${"👋"}`}</h1>
+      <div className="w-full rounded bg-[image:var(--background-gradient)] text-white flex flex-col gap-3 justify-center items-start p-4">
+        <span className="text-lg">Balance</span>
+        <span className="text-3xl font-bold ">
+          {user.currency}
+          {user.balance}
+        </span>
+      </div>
+      <div className="flex items-center justify-between">
+        <Radio.Group
+          onChange={onPeriodChange}
+          value={timePeriod}
+          block
+          options={options}
+          defaultValue="Yearly"
+          optionType="button"
+          buttonStyle="solid"
+          style={{ width: "20%" }}
+        />
+        <span className="text-text-grey">Showing data for current month</span>
+      </div>
+      <div className="flex w-full gap-4 ">
+        <Card variant="borderless" style={{ width: "80%" }}>
+          <Statistic
+            prefix={user.currency}
+            title="Total Budget"
+            value={parseInt(user.budget)}
+            formatter={formatter}
+            valueStyle={{
+              fontWeight: "600",
+              fontFamily: "Poppins",
+            }}
+          />
+        </Card>
+        <Card variant="borderless" style={{ width: "80%" }}>
+          <Statistic
+            prefix={user.currency}
+            title="Total Expenses"
+            valueStyle={{
+              color: "#cf1322",
+              fontWeight: "600",
+              fontFamily: "Poppins",
+            }}
+            value={parseFloat(user.expenses)}
+            formatter={formatter}
+            suffix={<ArrowDownOutlined />}
+          />
+        </Card>
+        <Card variant="borderless" style={{ width: "80%" }}>
+          <Statistic
+            prefix={user.currency}
+            valueStyle={{
+              color: "#3f8600",
+              fontWeight: "600",
+              fontFamily: "Poppins",
+            }}
+            title="Total Savings"
+            value={parseFloat(savings)}
+            formatter={formatter}
+            suffix={<ArrowUpOutlined />}
+          />
+        </Card>
+      </div>
+      <div className="flex gap-4 justify-between">
+        <div className="w-4/6 h-full flex flex-col gap-4">
+          <h1 className="text-xl font-bold text-primary-blue">
+            Recent Transactions
+          </h1>
+          <TransactionsTable rowLimit={5} pagination={false} />
+        </div>
+        <div className="w-2/6 h-full flex flex-col gap-4">
+          <h1 className="text-xl font-bold text-primary-blue">
+            Income vs Expenses
+          </h1>
+          <div className="flex items-center justify-center w-full bg-white rounded p-4 shadow-md">
+            <PieChart />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardHome;
