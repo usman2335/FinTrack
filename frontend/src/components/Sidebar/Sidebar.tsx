@@ -14,11 +14,25 @@ import Button from "../Button/Button";
 
 const Sidebar = () => {
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <AppstoreOutlined /> },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <AppstoreOutlined />,
+    },
     {
       name: "Manage Finances",
-      path: "/dashboard/finances",
+      path: "/dashboard/finances/add-expense", // Default open
       icon: <WalletOutlined />,
+      subItems: [
+        {
+          name: "Add Expense",
+          path: "/dashboard/finances/add-expense",
+        },
+        {
+          name: "Add Budget",
+          path: "/dashboard/finances/add-budget",
+        },
+      ],
     },
     {
       name: "Transactions",
@@ -62,10 +76,10 @@ const Sidebar = () => {
             <NavLink
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded  ${
+                `flex items-center gap-2 p-2 rounded ${
                   isActive
                     ? "text-primary-blue font-semibold"
-                    : "text-text-grey font-normal  hover:scale-105"
+                    : "text-text-grey font-normal hover:scale-105"
                 }`
               }
             >
@@ -92,6 +106,28 @@ const Sidebar = () => {
                 </>
               )}
             </NavLink>
+
+            {/* Sub-items if any */}
+            {item.subItems && (
+              <ul className="ml-8 mt-1 space-y-1">
+                {item.subItems.map((subItem) => (
+                  <li key={subItem.path}>
+                    <NavLink
+                      to={subItem.path}
+                      className={({ isActive }) =>
+                        `block text-sm p-1 rounded ${
+                          isActive
+                            ? "text-primary-blue font-semibold"
+                            : "text-text-grey hover:underline"
+                        }`
+                      }
+                    >
+                      {subItem.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
         <li className="mt-6">

@@ -6,6 +6,8 @@ import SignupPage from "./pages/SignupPage";
 import DashboardLayout from "./layouts/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
 import { ConfigProvider } from "antd";
+import AddExpensePage from "./pages/AddExpense";
+import AddBudgetPage from "./pages/AddBudget";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -16,7 +18,9 @@ function AnimatedRoutes() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome />}></Route>
+          <Route index element={<DashboardHome />} />
+          <Route path="finances/add-expense" element={<AddExpensePage />} />
+          <Route path="finances/add-budget" element={<AddBudgetPage />} />
         </Route>
       </Routes>
     </AnimatePresence>
