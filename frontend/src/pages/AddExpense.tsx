@@ -12,13 +12,13 @@ const AddExpensePage = () => {
     date: "",
     note: "",
   });
-  setFormData({
-    title: "",
-    category: "",
-    amount: "",
-    date: "",
-    note: "",
-  });
+  // setFormData({
+  //   title: "",
+  //   category: "",
+  //   amount: "",
+  //   date: "",
+  //   note: "",
+  // });
   // const handleChange = (
   //   e: React.ChangeEvent<
   //     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
