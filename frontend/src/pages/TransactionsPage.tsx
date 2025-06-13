@@ -1,4 +1,4 @@
-import { AllTransactionsTable } from "../components/TransactionsTable/TransactionsTable";
+import { TransactionsTable } from "../components/TransactionsTable/TransactionsTable";
 import { motion } from "framer-motion";
 
 const TransactionsPage = () => {
@@ -14,7 +14,7 @@ const TransactionsPage = () => {
       <p className="text-gray-500">
         View, filter, and track your financial activity in detail.
       </p>
-      <AllTransactionsTable />
+      <TransactionsTable />
     </motion.div>
   );
 };

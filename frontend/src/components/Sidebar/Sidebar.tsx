@@ -41,8 +41,12 @@ const Sidebar = () => {
     },
     {
       name: "Analytics",
-      path: "/dashboard/analytics",
+      path: "/dashboard/analytics/reports",
       icon: <LineChartOutlined />,
+      subItems: [
+        { name: "Financial Reports", path: "/dashboard/analytics/reports" },
+        { name: "Journal Entries", path: "/dashboard/analytics/journals" },
+      ],
     },
     {
       name: "Financial Records",
@@ -62,7 +66,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="hidden md:block md:w-64 bg-tertiary-blue text-white h-screen p-6 space-y-4">
+    <div className="hidden md:block md:w-64 bg-tertiary-blue text-white h-full p-6 space-y-4">
       <Logo className="text-4xl pl-2" />
       <ul className="space-y-2 mt-6">
         {menuItems.map((item) => (

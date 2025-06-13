@@ -4,8 +4,12 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import Button from "../components/Button/Button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setErrors] = useState({ email: "", password: "" });
@@ -34,7 +38,35 @@ const LoginPage = () => {
     if (!validate()) {
       alert("Please fill in all required fields.");
     } else {
-      alert("Login successful!");
+      axios
+        .post(
+          `http://localhost:5000/api/auth/login`,
+          { email, password },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          if (response.data.success) {
+            Swal.fire({
+              title: "Logging in...",
+              icon: "success",
+            });
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 1000);
+            localStorage.setItem("fullName", response.data.name);
+            localStorage.setItem("email", response.data.email);
+            localStorage.setItem("balance", response.data.balance);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+          }
+          if (error.response.status === 500) {
+            alert("Server error. Please try again later.");
+          } else {
+            alert("Network error. Please check your connection.");
+          }
+        });
     }
   };
 
@@ -113,9 +145,7 @@ const LoginPage = () => {
               </a>
             </div>
             <div onClick={handleSubmit}>
-              <Link to="/dashboard">
-                <Button text="Login" />
-              </Link>
+              <Button text="Login" />
             </div>
             <div className="text-sm md:text-base flex align-center justify-center gap-2">
               <p>

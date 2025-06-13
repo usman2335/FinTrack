@@ -9,6 +9,9 @@ import { ConfigProvider } from "antd";
 import AddExpensePage from "./pages/AddExpense";
 import AddBudgetPage from "./pages/AddBudget";
 import TransactionsPage from "./pages/TransactionsPage";
+import AuthChecker from "./utils/authChecker";
+import JournalEntries from "./pages/JournalEntries";
+import FinancialReports from "./pages/FinancialReports";
 
 const themeConfig = {
   token: {
@@ -36,11 +39,12 @@ function AnimatedRoutes() {
           <Route index element={<DashboardHome />} />
           <Route path="finances/add-expense" element={<AddExpensePage />} />
           <Route path="finances/add-budget" element={<AddBudgetPage />} />
-          <Route index element={<DashboardHome />}></Route>
+          <Route path="analytics/reports" element={<FinancialReports />} />
+          <Route path="analytics/journals" element={<JournalEntries />} />
           <Route
             path="/dashboard/transactions"
             element={<TransactionsPage />}
-          ></Route>
+          />
         </Route>
       </Routes>
     </AnimatePresence>
@@ -51,6 +55,7 @@ function App() {
   return (
     <BrowserRouter>
       <ConfigProvider theme={themeConfig}>
+        <AuthChecker />
         <AnimatedRoutes />
       </ConfigProvider>
     </BrowserRouter>

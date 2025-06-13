@@ -1,24 +1,18 @@
 import { Card, Radio, type StatisticProps, Statistic } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
-import transactions from "../data/transactions";
+import axios from "axios";
+import dayjs from "dayjs";
+
 import { TransactionsTable } from "../components/TransactionsTable/TransactionsTable";
 import PieChart from "../components/PieChart/PieChart";
-console.log(transactions);
 
 const formatter: StatisticProps["formatter"] = (value) => (
   <CountUp end={value as number} separator="," />
 );
 
-const user = {
-  name: "Usman Afzal",
-  balance: "521,000.00",
-  currency: "PKR ",
-  budget: "100000",
-  expenses: "30000",
-};
 const options = [
   {
     value: "Monthly",
@@ -29,20 +23,110 @@ const options = [
     label: "Weekly",
   },
 ];
-const calculateSavings = () => {
-  const budget = parseFloat(user.budget);
-  const expenses = parseFloat(user.expenses);
-  let savings = budget - expenses;
-  return String(savings);
-};
 
 const DashboardHome = () => {
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    balance: "",
+    currency: "PKR ",
+    currentMonthBudget: "",
+    currentWeekBudget: "",
+    monthlyExpense: "",
+    weeklyExpense: "",
+    expenses: "",
+  });
+
   const [timePeriod, setTimePeriod] = useState("Monthly");
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      const month = dayjs().month() + 1;
+      const dayOfMonth = dayjs().date();
+      const weekOfMonth = Math.ceil(dayOfMonth / 7);
+
+      const fullName = localStorage.getItem("fullName") || "User";
+      const balance = localStorage.getItem("balance") || "0.00";
+
+      let currentMonthBudget = "0.00";
+      let currentWeekBudget = "0.00";
+      let expenses = "0.00";
+      let monthlyExpense = "0.00";
+      let weeklyExpense = "0.00";
+      console.log("Date today:", dayjs().month(), dayjs().year(), weekOfMonth);
+
+      try {
+        const resMonth = await axios.get(
+          `http://localhost:5000/api/budget/${month}/${dayjs().year()}`,
+          { withCredentials: true }
+        );
+
+        currentMonthBudget = resMonth.data.data?.totalBudget || "0.00";
+        expenses = resMonth.data.data?.expenses || "0.00";
+      } catch (err) {
+        console.error("Monthly budget fetch failed:", err);
+      }
+
+      try {
+        const resWeek = await axios.get(
+          `http://localhost:5000/api/budget/${month}/${dayjs().year()}/${weekOfMonth}`,
+          { withCredentials: true }
+        );
+
+        currentWeekBudget = resWeek.data.data?.budget?.amount || "0.00";
+      } catch (err) {
+        console.error("Weekly budget fetch failed:", err);
+      }
+
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/expenses/${month}/${dayjs().year()}`,
+          { withCredentials: true }
+        );
+        console.log("Monthly expense:", response.data.total);
+        monthlyExpense = response.data.total || "0.00";
+      } catch (error) {
+        console.error("Error fetching monthly expenses:", error);
+      }
+
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/expenses/${month}/${dayjs().year()}/${weekOfMonth}`,
+          { withCredentials: true }
+        );
+        console.log("Weekly expense:", response.data.total);
+        weeklyExpense = response.data.total || "0.00";
+      } catch (error) {
+        console.error("Error fetching weekly expenses:", error);
+      }
+
+      setUserDetails({
+        name: fullName,
+        balance,
+        currency: "PKR ",
+        currentMonthBudget,
+        currentWeekBudget,
+        expenses,
+        monthlyExpense,
+        weeklyExpense,
+      });
+    };
+
+    getUserDetails();
+  }, []);
+
   const onPeriodChange = (e: any) => {
     setTimePeriod(e.target.value);
-    console.log("Selected Period: ", e.target.value);
   };
-  let savings = calculateSavings();
+
+  const calculateSavings = () => {
+    const budget = parseFloat(
+      timePeriod === "Monthly"
+        ? userDetails.currentMonthBudget
+        : userDetails.currentWeekBudget
+    );
+    const monthlyExpense = parseFloat(userDetails.monthlyExpense || "0");
+    return (budget - monthlyExpense).toFixed(2);
+  };
 
   return (
     <motion.div
@@ -52,38 +136,44 @@ const DashboardHome = () => {
       transition={{ duration: 0.3 }}
       className="md:p-6 flex flex-col gap-4"
     >
-      <h1 className="text-2xl font-bold">{`Welcome, ${user.name} ${"👋"}`}</h1>
+      <h1 className="text-2xl font-bold">{`Welcome, ${userDetails.name} 👋`}</h1>
+
       <div className="w-full rounded bg-[image:var(--background-gradient)] text-white flex flex-col gap-3 justify-center items-start p-4">
         <span className="text-lg">Balance</span>
         <span className="text-3xl font-bold ">
-          {user.currency}
-          {user.balance}
+          {userDetails.currency}
+          {userDetails.balance}
         </span>
       </div>
+
       <div className="flex items-center justify-center md:justify-between">
         <Radio.Group
           onChange={onPeriodChange}
           value={timePeriod}
           block
           options={options}
-          defaultValue="Yearly"
+          defaultValue="Monthly"
           optionType="button"
           buttonStyle="solid"
-          //   style={{ width: "100%" }}
           className="w-full md:w-1/5"
         />
-        <span className=" hidden md:block text-text-grey">
+        <span className="hidden md:block text-text-grey">
           {timePeriod === "Monthly"
             ? "Showing data for current month"
             : "Showing data for current week"}
         </span>
       </div>
+
       <div className="flex flex-col items-center md:flex-row w-full gap-4 ">
         <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
-            prefix={user.currency}
+            prefix={userDetails.currency}
             title="Total Budget"
-            value={parseInt(user.budget)}
+            value={
+              timePeriod === "Monthly"
+                ? parseFloat(userDetails.currentMonthBudget)
+                : parseFloat(userDetails.currentWeekBudget)
+            }
             formatter={formatter}
             valueStyle={{
               fontWeight: "600",
@@ -91,35 +181,42 @@ const DashboardHome = () => {
             }}
           />
         </Card>
+
         <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
-            prefix={user.currency}
+            prefix={userDetails.currency}
             title="Total Expenses"
             valueStyle={{
               color: "#cf1322",
               fontWeight: "600",
               fontFamily: "Poppins",
             }}
-            value={parseFloat(user.expenses)}
+            value={
+              timePeriod === "Monthly"
+                ? parseFloat(userDetails.monthlyExpense || "0")
+                : parseFloat(userDetails.weeklyExpense || "0")
+            }
             formatter={formatter}
             suffix={<ArrowDownOutlined />}
           />
         </Card>
+
         <Card variant="borderless" className="w-full md:w-4/5">
           <Statistic
-            prefix={user.currency}
+            prefix={userDetails.currency}
+            title="Total Savings"
+            value={parseFloat(calculateSavings())}
             valueStyle={{
               color: "#3f8600",
               fontWeight: "600",
               fontFamily: "Poppins",
             }}
-            title="Total Savings"
-            value={parseFloat(savings)}
             formatter={formatter}
             suffix={<ArrowUpOutlined />}
           />
         </Card>
       </div>
+
       <div className="flex flex-col md:flex-row gap-4 justify-between">
         <div className="w-full md:w-4/6 h-full flex flex-col gap-4">
           <h1 className="text-xl font-bold text-primary-blue">
@@ -127,9 +224,10 @@ const DashboardHome = () => {
           </h1>
           <TransactionsTable rowLimit={5} pagination={false} />
         </div>
+
         <div className="w-full md:w-2/6 h-full flex flex-col gap-4">
           <h1 className="text-xl font-bold text-primary-blue">
-            Income vs Expenses
+            Expense Categories
           </h1>
           <div className="flex items-center justify-center w-full bg-white rounded p-6 shadow-md">
             <PieChart />

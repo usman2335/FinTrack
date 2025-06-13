@@ -1,4 +1,7 @@
-const transactions = [
+import axios from "axios";
+import dayjs from "dayjs";
+
+export const transactions = [
   {
     id: 1,
     title: "Salary Payment",
@@ -81,4 +84,43 @@ const transactions = [
   },
 ];
 
-export default transactions;
+const getTransactions = async () => {
+  try {
+    const transactions = await axios.get("http://localhost:5000/api/expenses", {
+      withCredentials: true,
+    });
+    return transactions.data.data;
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+    return [];
+  }
+};
+
+export const calculateMonthlyExpenses = async (month: Number, year: Number) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/api/expenses/${month}/${year}`,
+      { withCredentials: true }
+    );
+    console.log("Monthly expense:", response);
+  } catch (error) {
+    console.error("Error fetching monthly expenses:", error);
+    return [];
+  }
+};
+
+export const getMonthlyBudget = async (month: Number) => {
+  try {
+    const resMonth = await axios.get(
+      `http://localhost:5000/api/budget/${month}/${dayjs().year()}`,
+      { withCredentials: true }
+    );
+
+    return resMonth.data.data?.totalBudget || "0.00";
+  } catch (error) {
+    console.error("Error fetching monthly budget:", error);
+    return [];
+  }
+};
+
+export default getTransactions;

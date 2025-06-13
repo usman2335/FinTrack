@@ -4,14 +4,25 @@ import { motion } from "framer-motion";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import Button from "../components/Button/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 const SignupPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setErrors] = useState({ email: "", password: "" });
+  const [error, setErrors] = useState({
+    email: "",
+    password: "",
+    fullName: "",
+  });
   const validate = () => {
     let valid = true;
-    const newErrors = { email: "", password: "" };
+    const newErrors = { email: "", password: "", fullName: "" };
 
     if (!email) {
       newErrors.email = "Email is required.";
@@ -25,6 +36,10 @@ const SignupPage = () => {
       newErrors.password = "Password is required.";
       valid = false;
     }
+    if (!fullName) {
+      newErrors.fullName = "Full name is required.";
+      valid = false;
+    }
 
     setErrors(newErrors);
     return valid;
@@ -34,7 +49,37 @@ const SignupPage = () => {
     if (!validate()) {
       alert("Please fill in all required fields.");
     } else {
-      alert("Login successful!");
+      axios
+        .post(`http://localhost:5000/api/auth/signup`, {
+          fullName,
+          email,
+          password,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            Swal.fire({
+              title: "Account created!",
+              text: "You can now log in.",
+              icon: "success",
+            });
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            if (error.response.status === 400) {
+              Swal.fire({
+                title: "Email already exists",
+                text: "Please use a different email.",
+                icon: "error",
+              });
+            } else if (error.response.status === 500) {
+              alert("Server error. Please try again later.");
+            }
+          } else {
+            alert("Network error. Please check your connection.");
+          }
+        });
     }
   };
 
@@ -44,6 +89,11 @@ const SignupPage = () => {
     if (/\S+@\S+\.\S+/.test(value)) {
       setErrors((prev) => ({ ...prev, email: "" }));
     }
+  };
+
+  const handleFullNameChange = (e: any) => {
+    const value = e.target.value;
+    setFullName(value);
   };
 
   const handlePasswordChange = (e: any) => {
@@ -83,8 +133,8 @@ const SignupPage = () => {
                     style={{ color: " #536E9F", paddingRight: "5px" }}
                   />
                 }
-                onChange={handleEmailChange}
-                status={error.email ? "error" : ""}
+                onChange={handleFullNameChange}
+                status={error.fullName ? "error" : ""}
               />
             </div>
             <div className="email flex flex-col gap-1">
